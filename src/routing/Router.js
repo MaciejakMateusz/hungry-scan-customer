@@ -10,7 +10,7 @@ export const Router = () => {
     useEffect(() => {
         const maxAge = 3 * 60 * 60;
         const urlParam = urlParamValue('token');
-        document.cookie = `jwt=${encodeURIComponent(JSON.stringify(urlParam))}; path=/; max-age=${maxAge}`;
+        document.cookie = `jwt=${urlParam}; path=/; max-age=${maxAge}`;
     },[]);
 
     return (
