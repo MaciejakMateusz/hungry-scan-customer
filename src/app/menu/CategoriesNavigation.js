@@ -69,7 +69,7 @@ export const CategoriesNavigation = () => {
             );
         }
         return categories.map(category => (
-            <div className={`nav-category ${category?.id === chosenCategory?.id ? 'active' : ''}`}
+            <div key={category.id} className={`nav-category ${category?.id === chosenCategory?.id ? 'active' : ''}`}
                  onClick={() => chooseCategory(category)}>
                 <span>{getTranslation(category?.name)}</span>
             </div>

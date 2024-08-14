@@ -2,6 +2,58 @@ import {combineReducers, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {apiHost} from "../apiData";
 import {getCookie} from "../utils";
 
+export const getVariants = createAsyncThunk(
+    'dishesCategories/getVariants',
+    async (credentials, {getState, rejectWithValue}) => {
+        const state = getState().dishesCategories.view;
+        if (!state.menuItem) {
+            return;
+        }
+        const response = await fetch(`${apiHost}/api/cms/variants/item`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getCookie('jwt')}`,
+            },
+            body: state.menuItem.id
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            return rejectWithValue(errorData);
+        }
+
+        return await response.json();
+    }
+);
+
+export const getVariantsSlice = createSlice(
+    {
+        name: 'getVariants',
+        initialState: {
+            isLoading: false,
+            variants: []
+        },
+        reducers: {
+            clearVariants: state => {
+                state.variants = null;
+            }
+        },
+        extraReducers: (builder) => {
+            builder
+                .addCase(getVariants.pending, state => {
+                    state.isLoading = true;
+                })
+                .addCase(getVariants.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                    state.variants = action.payload;
+                })
+                .addCase(getVariants.rejected, state => {
+                    state.isLoading = false;
+                })
+        }
+    });
+
 export const filter = createAsyncThunk(
     'filtering/filter',
     async (credentials, {rejectWithValue}) => {
@@ -104,7 +156,7 @@ export const dishesCategoriesSlice = createSlice(
         name: 'view',
         initialState: {
             category: null,
-            dish: null,
+            menuItem: null,
             filterActive: false,
             filterValue: '',
             filteredItems: null,
@@ -114,8 +166,8 @@ export const dishesCategoriesSlice = createSlice(
             setCategory: (state, action) => {
                 state.category = action.payload;
             },
-            setDish: (state, action) => {
-                state.dish = action.payload;
+            setMenuItem: (state, action) => {
+                state.menuItem = action.payload;
             },
             setFilterActive: (state, action) => {
                 state.filterActive = action.payload;
@@ -135,9 +187,11 @@ export const dishesCategoriesSlice = createSlice(
         }
     });
 
+export const {clearVariants} = getVariantsSlice.actions
+
 export const {
     setCategory,
-    setDish,
+    setMenuItem,
     setFilterActive,
     setFilterValue,
     setFilteredItems,
@@ -147,6 +201,7 @@ export const {
 const dishesCategoriesReducer = combineReducers({
     view: dishesCategoriesSlice.reducer,
     getCategories: getCategoriesSlice.reducer,
+    getVariants: getVariantsSlice.reducer,
     filter: filteringSlice.reducer
 });
 

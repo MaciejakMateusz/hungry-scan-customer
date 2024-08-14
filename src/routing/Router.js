@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import '../index.css'
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {Menu} from "../app/menu/Menu";
 import {RedirectTo} from "./RedirectTo";
 import {urlParamValue} from "../utils";
+import {ViewsController} from "../app/ViewsController";
 
 export const Router = () => {
 
@@ -17,7 +17,7 @@ export const Router = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<RedirectTo module={'menu'}/>}/>
-                <Route path='/menu' element={<Menu/>}/>
+                <Route path='/menu' element={<ViewsController/>}/>
             </Routes>
         </BrowserRouter>
     )
