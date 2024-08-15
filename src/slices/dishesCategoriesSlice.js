@@ -34,11 +34,6 @@ export const getVariantsSlice = createSlice(
             isLoading: false,
             variants: []
         },
-        reducers: {
-            clearVariants: state => {
-                state.variants = null;
-            }
-        },
         extraReducers: (builder) => {
             builder
                 .addCase(getVariants.pending, state => {
@@ -130,9 +125,13 @@ export const getCategories = createAsyncThunk(
 export const getCategoriesSlice = createSlice({
     name: 'getCategories',
     initialState: {
-        isLoading: false,
         categories: [],
-        errorData: null
+        isLoading: false
+    },
+    reducers: {
+      setIsLoading: (state, action) => {
+          state.isLoading = action.payload;
+      }
     },
     extraReducers: (builder) => {
         builder
@@ -140,13 +139,11 @@ export const getCategoriesSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getCategories.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.errorData = null;
                 state.categories = action.payload;
-            })
-            .addCase(getCategories.rejected, (state, action) => {
                 state.isLoading = false;
-                state.errorData = action.payload;
+            })
+            .addCase(getCategories.rejected, state => {
+                state.isLoading = false;
             })
     }
 });
@@ -165,6 +162,10 @@ export const dishesCategoriesSlice = createSlice(
         reducers: {
             setCategory: (state, action) => {
                 state.category = action.payload;
+                state.filterExpanded = false;
+                state.filteredItems = null;
+                state.filterValue = null;
+                state.filterActive = false;
             },
             setMenuItem: (state, action) => {
                 state.menuItem = action.payload;
@@ -187,7 +188,7 @@ export const dishesCategoriesSlice = createSlice(
         }
     });
 
-export const {clearVariants} = getVariantsSlice.actions
+export const {setIsLoading} = getCategoriesSlice.actions;
 
 export const {
     setCategory,

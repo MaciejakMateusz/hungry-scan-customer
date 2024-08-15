@@ -8,6 +8,7 @@ export const MenuItemsList = () => {
     const chosenCategory = useSelector(state => state.dishesCategories.view.category);
     const {filterActive, filteredItems} = useSelector(state => state.dishesCategories.view);
     const noPositions = chosenCategory?.menuItems.length === 0;
+    const noFilteredItems = filterActive && (!filteredItems || filteredItems?.length === 0);
 
     const renderMenuItems = () => {
         if (!chosenCategory) {
@@ -28,8 +29,7 @@ export const MenuItemsList = () => {
     return (
         <div className={'menu-items-wrapper'}>
             {renderMenuItems()}
-            {noPositions && <p>{t('noPositions')}</p>}
-            {((!filteredItems || filteredItems?.length === 0) && !noPositions) && <p>{t('noPositions')}</p>}
+            {(noPositions || noFilteredItems) && <p className={'no-positions-text'}>{t('noPositions')}</p>}
         </div>
     );
 }

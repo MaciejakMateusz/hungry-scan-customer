@@ -7,5 +7,6 @@
   "additions": "Additions",
   "optional": "optional",
   "search": "Search",
-  "noPositions": "No positions to display"
+  "noPositions": "No positions to display",
+  "noCategories": "No categories to display"
 }

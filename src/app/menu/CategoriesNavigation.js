@@ -8,40 +8,48 @@ import {
     setFilterActive,
     setFilteredItems,
     setFilterExpanded,
-    setFilterValue
+    setFilterValue,
+    setIsLoading
 } from "../../slices/dishesCategoriesSlice";
 import {getTranslation} from "../../locales/langUtils";
 import {FilteringForm} from "./FilteringForm";
+import {wait} from "@testing-library/user-event/dist/utils";
+import {useTranslation} from "react-i18next";
+import {LoadingSpinner} from "../icons/LoadingSpinner";
 
 export const CategoriesNavigation = () => {
     const dispatch = useDispatch();
+    const {t} = useTranslation();
     const {categories} = useSelector(state => state.dishesCategories.getCategories);
-    const chosenCategory = useSelector(state => state.dishesCategories.view.category)
+    const chosenCategory = useSelector(state => state.dishesCategories.view.category);
     const {filterExpanded, filterValue} = useSelector(state => state.dishesCategories.view);
-
-    useEffect(() => {
-        fetchCategories();
-    }, [])
+    const {isLoading} = useSelector(state => state.dishesCategories.getCategories);
 
     const fetchCategories = async () => {
         const resultAction = await dispatch(getCategories());
         if(getCategories.fulfilled.match(resultAction)) {
             setInitialCategory(resultAction.payload);
         }
-    }
+    };
+
+    useEffect(() => {
+        dispatch(setIsLoading(true));
+        wait(1000)
+            .then(() => fetchCategories());
+    }, [dispatch]);
 
     const setInitialCategory = (payload) => {
         if(chosenCategory) {
             return;
         }
         dispatch(setCategory(payload.length !== 0 ? payload[0] : null));
-    }
+    };
 
     const handleSearchSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         dispatch(setFilterValue(e.target.value));
         await executeFilter(e.target.value);
-    }
+    };
 
     const executeFilter = async value => {
         if ('' !== value) {
@@ -54,17 +62,17 @@ export const CategoriesNavigation = () => {
             dispatch(setFilterActive(false));
             dispatch(setFilteredItems(null));
         }
-    }
+    };
 
     const chooseCategory = (category) => {
         dispatch(setCategory(category));
-    }
+    };
 
     const renderCategoriesButtons = () => {
         if(categories.length === 0) {
             return (
                 <div className={'nav-category'}>
-                    <span>Brak kategorii</span>
+                    <span>{t('noCategories')}</span>
                 </div>
             );
         }
@@ -73,8 +81,8 @@ export const CategoriesNavigation = () => {
                  onClick={() => chooseCategory(category)}>
                 <span>{getTranslation(category?.name)}</span>
             </div>
-            ));
-    }
+        ));
+    };
 
     return (
         <div className={'nav-container'}>
@@ -83,9 +91,12 @@ export const CategoriesNavigation = () => {
                         onClick={() => dispatch(setFilterExpanded(!filterExpanded))}>
                     <SearchIcon/>
                 </button>
-                {filterExpanded ? <FilteringForm value={filterValue} searchSubmit={handleSearchSubmit}/> : <></>}
+                <div className={`search-form-container ${filterExpanded ? 'visible' : 'hidden'}`}>
+                    <FilteringForm value={filterValue} searchSubmit={handleSearchSubmit}/>
+                </div>
             </div>
+            {isLoading && <LoadingSpinner/>}
             {renderCategoriesButtons()}
         </div>
     );
-}
+};
