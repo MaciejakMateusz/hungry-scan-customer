@@ -23,6 +23,7 @@ export const CategoriesNavigation = () => {
     const {categories} = useSelector(state => state.dishesCategories.getCategories);
     const chosenCategory = useSelector(state => state.dishesCategories.view.category);
     const {filterExpanded, filterValue} = useSelector(state => state.dishesCategories.view);
+    const {isPending} = useSelector(state => state.dishesCategories.filter);
     const {isLoading} = useSelector(state => state.dishesCategories.getCategories);
 
     const fetchCategories = async () => {
@@ -33,6 +34,9 @@ export const CategoriesNavigation = () => {
     };
 
     useEffect(() => {
+        if(categories?.length !== 0) {
+            return;
+        }
         dispatch(setIsLoading(true));
         wait(1000)
             .then(() => fetchCategories());
@@ -93,9 +97,10 @@ export const CategoriesNavigation = () => {
                 </button>
                 <div className={`search-form-container ${filterExpanded ? 'visible' : 'hidden'}`}>
                     <FilteringForm value={filterValue} searchSubmit={handleSearchSubmit}/>
+                    {filterValue !== '' && <span className={'clear-filter-x'} onClick={() => dispatch(setFilterValue(''))}>x</span>}
                 </div>
             </div>
-            {isLoading && <LoadingSpinner/>}
+            {(isLoading || isPending) && <LoadingSpinner/>}
             {renderCategoriesButtons()}
         </div>
     );

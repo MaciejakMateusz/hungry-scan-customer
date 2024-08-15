@@ -81,6 +81,7 @@ input[type="password"]:active {
     background: #FFF;
     color: #7D7D7D;
     text-wrap: nowrap;
+    cursor: pointer;
 }
 
 .nav-category.active {
@@ -98,6 +99,7 @@ input[type="password"]:active {
     border-radius: 16px;
     background: #FFF;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .menu-item-grid {
@@ -228,6 +230,7 @@ input[type="password"]:active {
 }
 
 .search-form-container {
+    position: relative;
     overflow: hidden;
     width: 0;
     transition: width 0.5s ease, opacity 0.5s ease;
@@ -253,8 +256,9 @@ input[type="password"]:active {
     font-size: 0.9rem;
     font-weight: 400;
     color: #000;
-    width: 170px;
+    width: 140px;
     height: 30px;
+    margin-right: 30px;
     font-family: "Lexend", sans-serif;
     border-radius: 100px;
     background: #FFF;
@@ -268,6 +272,12 @@ input[type="password"]:active {
 
 .search-button-input:focus::placeholder {
     color: #FFF;
+}
+
+.clear-filter-x {
+    position: absolute;
+    right: 15px;
+    color: #7D7D7D;
 }
 
 @keyframes appear {
@@ -299,6 +309,7 @@ input[type="password"]:active {
     top: 10px;
     left: 15px;
     z-index: 1;
+    cursor: pointer;
 }
 
 .details-image-container {
@@ -325,7 +336,7 @@ input[type="password"]:active {
     margin-top: -35px;
     width: 100%;
     max-width: 100%;
-    height: 100%;
+    min-height: calc(100% - 179px);
 }
 
 .details-data-container {

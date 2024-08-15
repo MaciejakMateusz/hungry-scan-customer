@@ -7,8 +7,9 @@ export const MenuItemsList = () => {
     const {t} = useTranslation();
     const chosenCategory = useSelector(state => state.dishesCategories.view.category);
     const {filterActive, filteredItems} = useSelector(state => state.dishesCategories.view);
+    const {isPending} = useSelector(state => state.dishesCategories.filter);
     const noPositions = chosenCategory?.menuItems.length === 0;
-    const noFilteredItems = filterActive && (!filteredItems || filteredItems?.length === 0);
+    const noFilteredItems = filterActive && (!filteredItems || filteredItems?.length === 0) && !isPending;
 
     const renderMenuItems = () => {
         if (!chosenCategory) {

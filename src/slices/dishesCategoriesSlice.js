@@ -80,20 +80,18 @@ export const filteringSlice = createSlice(
     {
         name: 'filter',
         initialState: {
-            isLoading: false,
+            isPending: false,
         },
         extraReducers: (builder) => {
             builder
                 .addCase(filter.pending, state => {
-                    state.isLoading = true;
+                    state.isPending = true;
                 })
                 .addCase(filter.fulfilled, state => {
-                    state.isLoading = false;
-                    state.removalError = {};
+                    state.isPending = false;
                 })
-                .addCase(filter.rejected, (state, action) => {
-                    state.isLoading = false;
-                    state.removalError = action.payload;
+                .addCase(filter.rejected, (state) => {
+                    state.isPending = false;
                 })
         }
     });
@@ -164,7 +162,7 @@ export const dishesCategoriesSlice = createSlice(
                 state.category = action.payload;
                 state.filterExpanded = false;
                 state.filteredItems = null;
-                state.filterValue = null;
+                state.filterValue = '';
                 state.filterActive = false;
             },
             setMenuItem: (state, action) => {
@@ -175,6 +173,9 @@ export const dishesCategoriesSlice = createSlice(
             },
             setFilterValue: (state, action) => {
                 state.filterValue = action.payload;
+                if(state.filterValue === '') {
+                    state.filterActive = false;
+                }
             },
             setFilteredItems: (state, action) => {
                 state.filteredItems = action.payload;
@@ -182,7 +183,7 @@ export const dishesCategoriesSlice = createSlice(
             setFilterExpanded: (state, action) => {
                 state.filterExpanded = action.payload;
                 state.filteredItems = null;
-                state.filterValue = null;
+                state.filterValue = '';
                 state.filterActive = false;
             },
         }
