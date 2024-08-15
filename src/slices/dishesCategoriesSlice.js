@@ -156,6 +156,7 @@ export const dishesCategoriesSlice = createSlice(
             filterValue: '',
             filteredItems: null,
             filterExpanded: false,
+            onboardingActive: true
         },
         reducers: {
             setCategory: (state, action) => {
@@ -186,6 +187,9 @@ export const dishesCategoriesSlice = createSlice(
                 state.filterValue = '';
                 state.filterActive = false;
             },
+            setOnboardingActive: (state, action) => {
+                state.onboardingActive = action.payload;
+            },
         }
     });
 
@@ -197,7 +201,8 @@ export const {
     setFilterActive,
     setFilterValue,
     setFilteredItems,
-    setFilterExpanded
+    setFilterExpanded,
+    setOnboardingActive
 } = dishesCategoriesSlice.actions;
 
 const dishesCategoriesReducer = combineReducers({
