@@ -7,7 +7,7 @@ export const MenuItemImage = ({menuItem}) => {
     const imgName = menuItem.imageName;
 
     if (!imgName) {
-        return <></>;
+        return (<></>);
     }
 
     return (
