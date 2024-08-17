@@ -6,19 +6,22 @@ import {Variants} from "./Variants";
 import {Additions} from "./Additions";
 import {useDispatch, useSelector} from "react-redux";
 import {getVariants} from "../../../slices/dishesCategoriesSlice";
+import {Labels} from "./Labels";
 
 export const DataSection = () => {
     const dispatch = useDispatch();
     const {menuItem} = useSelector(state => state.dishesCategories.view);
+    const imgName = menuItem.imageName;
 
     useEffect(() => {
         dispatch(getVariants());
     }, [dispatch])
 
     return (
-        <section className={'details-data-section'}>
+        <section className={`details-data-section ${!imgName ? 'no-image' : ''}`}>
             <div className={'details-data-container'}>
                 <Banner detailMode={true} menuItem={menuItem}/>
+                <Labels/>
                 <NameAndDescription/>
                 <Allergens/>
                 <Variants/>

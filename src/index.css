@@ -196,6 +196,29 @@ input[type="password"]:active {
     z-index: 1;
 }
 
+.details-labels-container {
+    display: inline-block;
+    margin-left: 15px;
+    position: absolute;
+    top: 17px;
+}
+
+.details-labels-container.no-banner {
+    position: unset;
+    top: 0;
+    margin: 0;
+}
+
+.details-labels-container.no-image {
+    top: 37px;
+}
+
+.details-label-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+}
+
 .menu-item-text-data-grid {
     grid-column: 2;
     position: relative;
@@ -359,6 +382,8 @@ input[type="password"]:active {
 .menu-item-details-container {
     position: relative;
     width: 100%;
+    height: 100%;
+    background: #FFF;
 }
 
 .return-button {
@@ -395,11 +420,15 @@ input[type="password"]:active {
     position: relative;
     border-radius: 40px 40px 0 0;
     background: #FFF;
-    box-shadow: 0 -9px 20px 0 rgba(0, 0, 0, 0.25);
     margin-top: -35px;
     width: 100%;
     max-width: 100%;
     min-height: calc(100% - 233px);
+}
+
+.details-data-section.no-image {
+    margin-top: 0;
+    padding-top: 50px;
 }
 
 .details-data-container {
@@ -407,6 +436,7 @@ input[type="password"]:active {
     font-family: "Lexend", sans-serif;
     font-style: normal;
     line-height: 18px;
+    position: relative;
 }
 
 .details-banner {
@@ -420,6 +450,10 @@ input[type="password"]:active {
     color: #FFF;
     background: #000;
     margin-bottom: 17px;
+}
+
+.details-banner.no-image {
+    margin-top: 20px;
 }
 
 .details-name {
