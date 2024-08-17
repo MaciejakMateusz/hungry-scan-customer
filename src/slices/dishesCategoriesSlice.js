@@ -99,7 +99,7 @@ export const filteringSlice = createSlice(
 export const getCategories = createAsyncThunk(
     'getCategories/getCategories',
     async (_, {rejectWithValue}) => {
-        const response = await fetch(`${apiHost}/api/cms/categories`, {
+        const response = await fetch(`${apiHost}/api/cms/categories/available`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
