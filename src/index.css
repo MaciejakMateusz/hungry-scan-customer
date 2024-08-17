@@ -197,20 +197,8 @@ input[type="password"]:active {
 }
 
 .details-labels-container {
-    display: inline-block;
     margin-left: 15px;
-    position: absolute;
-    top: 17px;
-}
-
-.details-labels-container.no-banner {
-    position: unset;
-    top: 0;
-    margin: 0;
-}
-
-.details-labels-container.no-image {
-    top: 37px;
+    display: flex;
 }
 
 .details-label-icon {
@@ -463,6 +451,8 @@ input[type="password"]:active {
     font-weight: 500;
     line-height: 18px;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .details-name.no-banner {

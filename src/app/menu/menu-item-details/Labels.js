@@ -6,15 +6,13 @@ import {ReactSVG} from "react-svg";
 
 export const Labels = () => {
     const {menuItem} = useSelector(state => state.dishesCategories.view);
-    const hasBanner = menuItem.new || menuItem.bestseller;
-    const imgName = menuItem.imageName;
 
     if (menuItem?.labels === 0) {
         return (<></>);
     }
 
     return (
-        <div className={`details-labels-container ${!hasBanner ? 'no-banner' : ''} ${!imgName ? 'no-image' : ''}`}>
+        <div className={'details-labels-container'}>
             {menuItem.labels.map(label => (
                 <Tooltip content={getTranslation(label?.name)}
                          key={label?.id}>
