@@ -1,2 +1,2 @@
-export const apiHost = "http://192.168.50.2:8082";
+export const apiHost = process.env.REACT_APP_CORE_HOST;
 export const imagesPath = apiHost + "/images/";
