@@ -68,10 +68,6 @@ export const CategoriesNavigation = () => {
         }
     };
 
-    const chooseCategory = (category) => {
-        dispatch(setCategory(category));
-    };
-
     const renderCategoriesButtons = () => {
         if(categories.length === 0) {
             return (
@@ -81,8 +77,9 @@ export const CategoriesNavigation = () => {
             );
         }
         return categories.map(category => (
-            <div key={category.id} className={`nav-category ${category?.id === chosenCategory?.id ? 'active' : ''}`}
-                 onClick={() => chooseCategory(category)}>
+            <div key={category.id}
+                 className={`nav-category ${category?.id === chosenCategory?.id ? 'active' : ''}`}
+                 onClick={() => dispatch(setCategory(category))}>
                 <span>{getTranslation(category?.name)}</span>
             </div>
         ));

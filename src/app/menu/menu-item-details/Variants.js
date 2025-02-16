@@ -18,7 +18,7 @@ export const Variants = () => {
             <div className={'details-definition-text'}>{t('variants')}:</div>
             <div className={'details-list-positions-wrapper'}>
                 {variants.map(variant => (
-                    <div className={'details-list-position-container'}>
+                    <div key={variant.id} className={'details-list-position-container'}>
                         <span className={'details-list-position-text'}>{getTranslation(variant.name)}</span>
                         <span className={'details-list-position-price'}>{formatPrice(variant.price + menuItem.price)} zł</span>
                     </div>
