@@ -8,6 +8,7 @@ import {executePostScanActions} from "../slices/postScanSlice";
 export const Router = () => {
 
     useEffect(() => {
+        console.log(process.env.REACT_APP_CORE_HOST);
         executePostScanActions();
     }, []);
 
