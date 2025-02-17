@@ -1,6 +1,5 @@
 import {combineReducers, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {apiHost} from "../apiData";
-import {getCookie} from "../utils";
 
 export const getVariants = createAsyncThunk(
     'dishesCategories/getVariants',
@@ -12,9 +11,9 @@ export const getVariants = createAsyncThunk(
         const response = await fetch(`${apiHost}/api/cms/variants/item`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${getCookie('jwt')}`,
+                "Content-Type": "application/json"
             },
+            credentials: "include",
             body: state.menuItem.id
         });
 
@@ -57,9 +56,9 @@ export const filter = createAsyncThunk(
         const response = await fetch(`${apiHost}/api/cms/${path}/filter`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getCookie('jwt')}`
+                'Content-Type': 'application/json'
             },
+            credentials: "include",
             body: value
         });
 
@@ -102,9 +101,9 @@ export const getCategories = createAsyncThunk(
         const response = await fetch(`${apiHost}/api/cms/categories/available`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getCookie('jwt')}`
-            }
+                'Content-Type': 'application/json'
+            },
+            credentials: "include"
         });
 
         if (!response.ok) {
